@@ -41,4 +41,13 @@ class AppTextstyle {
    fontWeight: FontWeight.w300,
  );
 
+
+  // Correct
+  static TextStyle textStyle16blackW400 = GoogleFonts.jacquesFrancois(
+    fontSize: 16,
+    color: Color(0xFF302025),
+    fontWeight: FontWeight.w400,
+  );
+
+
 }
