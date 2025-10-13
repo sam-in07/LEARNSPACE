@@ -1,8 +1,6 @@
 # learnsphere
 
-# LearnSphere - Learning Management System ## Project Vision LearnSphere is a
-mobile-based Learning Management System that connects learners and administrators to simplify online education. ## Objectives - Allow learners to browse and enroll in courses. - Provide admins tools to manage and monitor programs. - Offer progress tracking and user-friendly navigation. ## Navigation Flow Login  Home  Program Listing  Program Details/Profile
-
+A new Flutter project.
 
 ## Getting Started
 
