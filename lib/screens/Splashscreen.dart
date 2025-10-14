@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:learnsphere/screens/LoginScreen.dart';
 import 'package:learnsphere/widgets/app_text.dart';
 import 'package:learnsphere/widgets/app_text_style.dart';
+import 'package:learnsphere/widgets/colors.dart';
+import 'package:learnsphere/widgets/primary_button.dart';
 
 class Splashscreen extends StatelessWidget {
   const Splashscreen({super.key});
@@ -27,10 +30,30 @@ class Splashscreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: height * 0.03),
-                Text(
-                  AppText.lsmoti,
-                  style: AppTextstyle.textStyle16blackW400,
-                ),
+                // Text(
+                //   AppText.lsmoti,
+                //   style: AppTextstyle.textStyle16blackW400,
+                // ),
+            Text(
+              'Organize. Track. Achieve. \nYour Learning Journey, Simplified',
+              textAlign: TextAlign.center,
+              style: AppTextstyle.textStyle16blackW400,
+            ),
+            SizedBox(height: height * 0.05),
+            PrimaryButton(
+              height: 55,
+              width: 247,
+              radius: 5.5,
+              color: AppColors.primaryColor,
+              title: 'Get Started',
+              textStyle:AppTextstyle.textStyle24whiteW400,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => login()),
+                );
+              },
+            ),
 
           ],
         ),
