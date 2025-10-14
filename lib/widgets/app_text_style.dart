@@ -48,6 +48,10 @@ class AppTextstyle {
     color: Color(0xFF302025),
     fontWeight: FontWeight.w400,
   );
-
+  static TextStyle textStyle24whiteW400 = GoogleFonts.inder(
+    fontSize: 24,
+    color: Color(0xfff3f3f3),
+    fontWeight: FontWeight.w400,
+  );
 
 }
