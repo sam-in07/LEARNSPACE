@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:learnsphere/screens/HomeScreen.dart';
+import 'package:learnsphere/widgets/app_text_style.dart';
+import 'package:learnsphere/widgets/colors.dart';
 import 'package:learnsphere/widgets/customer_text_feild.dart';
+import 'package:learnsphere/widgets/primary_button.dart';
 
 class login  extends StatefulWidget {
   const login ({super.key});
@@ -66,6 +70,22 @@ class _loginState extends State<login > {
                 isPassword: true,
               ),
 
+             //login button
+              SizedBox(height: height * 0.125),
+              PrimaryButton(
+                height: 55,
+                width: 247,
+                radius: 5.5,
+                color: AppColors.primaryColor,
+                title: 'Sign Up',
+                textStyle:AppTextstyle.textStyle24whiteW400,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => homepage()),
+                  );
+                },
+              ),
             ],
           ),
        ),
