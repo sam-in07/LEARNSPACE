@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnsphere/screens/RegistrationScreen.dart';
 import 'package:learnsphere/screens/Splashscreen.dart';
 
 void main() {

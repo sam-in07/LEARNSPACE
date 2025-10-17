@@ -10,14 +10,6 @@ class homepage extends StatefulWidget {
 class _homepageState extends State<homepage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Text('Home  Screen'),
-          ],
-        ),
-      ),
-    );
+    return Scaffold(body: Center(child: Text('Home  Screen')));
   }
 }
