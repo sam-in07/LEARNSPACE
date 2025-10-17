@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:learnsphere/screens/HomeScreen.dart';
+import 'package:learnsphere/screens/MainScreen.dart';
 import 'package:learnsphere/screens/RegistrationScreen.dart';
 import 'package:learnsphere/widgets/app_text_style.dart';
 import 'package:learnsphere/widgets/colors.dart';
 import 'package:learnsphere/widgets/customer_text_feild.dart';
 import 'package:learnsphere/widgets/primary_button.dart';
 
-class login  extends StatefulWidget {
-  const login ({super.key});
+class login extends StatefulWidget {
+  const login({super.key});
 
   @override
-  State<login > createState() => _loginState();
+  State<login> createState() => _loginState();
 }
 
-class _loginState extends State<login > {
-
+class _loginState extends State<login> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
@@ -28,11 +28,23 @@ class _loginState extends State<login > {
 
   @override
   void dispose() {
-
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('created account sucessfully')));
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => Mainscreen()));
+    }
+  }
+
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -40,12 +52,14 @@ class _loginState extends State<login > {
     final height = mediaQuery.size.height;
     final size = MediaQuery.of(context).size;
     return Scaffold(
-       body: Center(
+      body: Center(
+        child: Form(
+          key: _formKey,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: width * 0.5,
+                width: width * 0.7,
                 height: height * 0.3,
                 child: Image.asset(
                   'assets/images/lrm_sm.png',
@@ -54,12 +68,10 @@ class _loginState extends State<login > {
               ),
               SizedBox(height: height * 0.025),
 
-
               CustomerTextField(
                 controller: _emailController,
                 labelText: 'Email Address',
                 hintText: 'Enter your email',
-
               ),
 
               const SizedBox(height: 24.0),
@@ -70,7 +82,6 @@ class _loginState extends State<login > {
                 hintText: 'Enter your password',
                 isPassword: true,
               ),
-
 
               SizedBox(height: height * 0.07),
               //forgot password
@@ -93,7 +104,6 @@ class _loginState extends State<login > {
                 ),
               ),
 
-
               //login button
               SizedBox(height: height * 0.04),
               PrimaryButton(
@@ -102,39 +112,39 @@ class _loginState extends State<login > {
                 radius: 5.5,
                 color: AppColors.primaryColor,
                 title: 'Login',
-                textStyle:AppTextstyle.textStyle24whiteW400,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => homepage()),
-                  );
-                },
+                textStyle: AppTextstyle.textStyle24whiteW400,
+                onTap: _submitForm,
               ),
               SizedBox(height: height * 0.03),
-              Text(
-                "Don't have an account ?",
-                textAlign: TextAlign.center,
-                style: AppTextstyle.textStyle16blackW400,
+              Row(
+                spacing: 5.0,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account ?",
+                    textAlign: TextAlign.center,
+                    style: AppTextstyle.textStyle16blackW400,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      // navigate to login page
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (ctx) => Registrationscreen(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: AppTextstyle.textStyle22orrageW300,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: height * 0.01),
-              PrimaryButton(
-                height: 55,
-                width: 346,
-                radius: 5.5,
-                color: AppColors.primaryColor,
-                title: 'Create New Account',
-                textStyle:AppTextstyle.textStyle24whiteW400,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => regiscreen()),
-                  );
-                },
-              ),
-
             ],
           ),
-       ),
+        ),
+      ),
     );
   }
 }

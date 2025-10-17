@@ -45,10 +45,7 @@ class _CustomerTextFieldState extends State<CustomerTextField> {
           // Label
           Text(
             widget.labelText,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8.0),
 
@@ -56,6 +53,11 @@ class _CustomerTextFieldState extends State<CustomerTextField> {
           TextFormField(
             controller: widget.controller,
             obscureText: _isObscure,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "enter ${widget.labelText.toLowerCase()} correctly";
+              }
+            },
             decoration: InputDecoration(
               hintText: widget.hintText,
               contentPadding: const EdgeInsets.symmetric(
@@ -68,21 +70,20 @@ class _CustomerTextFieldState extends State<CustomerTextField> {
               prefixIcon: widget.prefixWidget,
               suffixIcon: widget.isPassword
                   ? IconButton(
-                icon: Icon(
-                  _isObscure ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _isObscure = !_isObscure;
-                  });
-                },
-              )
+                      icon: Icon(
+                        _isObscure ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                    )
                   : null,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4.0),
-                borderSide:
-                BorderSide(color: Colors.grey.shade400, width: 1.0),
+                borderSide: BorderSide(color: Colors.grey.shade400, width: 1.0),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4.0),
