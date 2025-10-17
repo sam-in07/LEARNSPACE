@@ -71,11 +71,34 @@ class _loginState extends State<login > {
                 isPassword: true,
               ),
 
-             //login button
-              SizedBox(height: height * 0.125),
+
+              SizedBox(height: height * 0.07),
+              //forgot password
+              Padding(
+                padding: const EdgeInsets.only(right: 46.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      // Action when tapped
+                    },
+                    child: const Text(
+                      'Forgot password?',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+
+              //login button
+              SizedBox(height: height * 0.04),
               PrimaryButton(
                 height: 55,
-                width: 247,
+                width: 346,
                 radius: 5.5,
                 color: AppColors.primaryColor,
                 title: 'Login',
@@ -87,7 +110,7 @@ class _loginState extends State<login > {
                   );
                 },
               ),
-              SizedBox(height: height * 0.04),
+              SizedBox(height: height * 0.03),
               Text(
                 "Don't have an account ?",
                 textAlign: TextAlign.center,
@@ -96,7 +119,7 @@ class _loginState extends State<login > {
               SizedBox(height: height * 0.01),
               PrimaryButton(
                 height: 55,
-                width: 247,
+                width: 346,
                 radius: 5.5,
                 color: AppColors.primaryColor,
                 title: 'Create New Account',
