@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnsphere/screens/HomeScreen.dart';
+import 'package:learnsphere/screens/RegistrationScreen.dart';
 import 'package:learnsphere/widgets/app_text_style.dart';
 import 'package:learnsphere/widgets/colors.dart';
 import 'package:learnsphere/widgets/customer_text_feild.dart';
@@ -77,7 +78,7 @@ class _loginState extends State<login > {
                 width: 247,
                 radius: 5.5,
                 color: AppColors.primaryColor,
-                title: 'Sign Up',
+                title: 'Login',
                 textStyle:AppTextstyle.textStyle24whiteW400,
                 onTap: () {
                   Navigator.push(
@@ -86,6 +87,28 @@ class _loginState extends State<login > {
                   );
                 },
               ),
+              SizedBox(height: height * 0.04),
+              Text(
+                "Don't have an account ?",
+                textAlign: TextAlign.center,
+                style: AppTextstyle.textStyle16blackW400,
+              ),
+              SizedBox(height: height * 0.01),
+              PrimaryButton(
+                height: 55,
+                width: 247,
+                radius: 5.5,
+                color: AppColors.primaryColor,
+                title: 'Create New Account',
+                textStyle:AppTextstyle.textStyle24whiteW400,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => regiscreen()),
+                  );
+                },
+              ),
+
             ],
           ),
        ),

@@ -10,6 +10,14 @@ class homepage extends StatefulWidget {
 class _homepageState extends State<homepage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Text('Home  Screen'),
+          ],
+        ),
+      ),
+    );
   }
 }
