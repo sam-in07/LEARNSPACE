@@ -12,11 +12,11 @@ class Mainscreen extends StatefulWidget {
 class _MainscreenState extends State<Mainscreen> {
   int selectedIndex = 0;
   final List<Widget> _pages = [
-    homepage(),
-    homepage(),
-    homepage(),
-    homepage(),
-    homepage(),
+    Homescreen(),
+    Homescreen(),
+    Homescreen(),
+    Homescreen(),
+    Homescreen(),
   ];
   @override
   Widget build(BuildContext context) {
