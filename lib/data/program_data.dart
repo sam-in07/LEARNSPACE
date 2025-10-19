@@ -1,6 +1,6 @@
-final List<Map<String, dynamic>> programData = [
+final List<Map<String, dynamic>> coursesData = [
   {
-    'name': 'Pyhton',
+    'name': 'Python',
     'learners': '64k Learners',
     'courses': '2 Course',
     'articles': '72 Articles',
@@ -27,4 +27,63 @@ final List<Map<String, dynamic>> programData = [
     'articles': '31 Articles',
     'logo': 'assets/images/program_images/server.png',
   },
+  {
+    'name': 'Java',
+    'learners': '54k Learners',
+    'courses': '1 Course',
+    'articles': '92 Articles',
+    'logo': 'assets/images/program_images/java.png',
+  },
+  {
+    'name': 'JavaScript',
+    'learners': '27k Learners',
+    'courses': '1 Course',
+    'articles': '60 Articles',
+    'logo': 'assets/images/program_images/javascript.png',
+  },
+  {
+    'name': 'SQL',
+    'learners': '22k Learners',
+    'courses': '3 Course',
+    'articles': '56 Articles',
+    'logo': 'assets/images/program_images/sql.png',
+  },
+  {
+    'name': 'HTML',
+    'learners': '19k Learners',
+    'courses': '',
+    'articles': '31 Articles',
+    'logo': 'assets/images/program_images/html.png',
+  },
+  {
+    'name': 'Software Engineering',
+    'learners': '14k Learners',
+    'courses': '1 Course',
+    'articles': '98 Articles',
+    'logo': 'assets/images/program_images/softwareengineering.png',
+  },
+  {
+    'name': 'React',
+    'learners': '10k Learners',
+    'courses': '',
+    'articles': '181 Articles',
+    'logo': 'assets/images/program_images/react.png',
+  },
+  {
+    'name': 'CSS',
+    'learners': '9k Learners',
+    'courses': '1 Course',
+    'articles': '44 Articles',
+    'logo': 'assets/images/program_images/css.png',
+  },
+];
+
+final List<Map<String, dynamic>> filterData = [
+  {'title': 'Software Engineering', 'status': false},
+  {'title': 'Data Science', 'status': true},
+  {'title': 'Programming Languages', 'status': false},
+  {'title': 'Programing Framework', 'status': false},
+  {'title': 'Frontend Development', 'status': false},
+  {'title': 'Backend Development', 'status': false},
+  {'title': 'Mobile App Development', 'status': false},
 ];

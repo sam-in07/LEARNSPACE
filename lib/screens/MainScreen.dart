@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnsphere/screens/HomeScreen.dart';
 import 'package:learnsphere/screens/ProfileScreen.dart';
+import 'package:learnsphere/screens/ProgramListScreen.dart';
 import 'package:learnsphere/widgets/colors.dart';
 
 class Mainscreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class _MainscreenState extends State<Mainscreen> {
   int selectedIndex = 0;
   final List<Widget> _pages = [
     Homescreen(),
-    Homescreen(),
+    ProgramlistScreen(),
     Homescreen(),
     Homescreen(),
     Profilescreen(),

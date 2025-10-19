@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learnsphere/data/settings_data.dart';
-import 'package:learnsphere/widgets/app_text_style.dart';
 import 'package:learnsphere/widgets/colors.dart';
 import 'package:learnsphere/widgets/settings_tile.dart';
 

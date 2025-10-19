@@ -144,7 +144,9 @@ class _ProgramCardState extends State<ProgramCard> {
 
   Widget chipText(bool isRegistered) {
     final text = (isRegistered) ? '✅ Registered' : '📈 331 People Registered';
-    final chipColor = (isRegistered) ? Colors.green[100] : Colors.white24;
+    final chipColor = (isRegistered)
+        ? Colors.green[100]
+        : const Color.fromARGB(59, 228, 212, 212);
     final chipTextColor = (isRegistered) ? Colors.green : Colors.black54;
     return Container(
       padding: const EdgeInsets.all(4),

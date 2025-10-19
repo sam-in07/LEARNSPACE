@@ -57,12 +57,12 @@ class _LearningCardState extends State<LearningCard> {
             ),
             child: Center(
               child: SizedBox(
-                height: 60,
-                width: 50,
+                height: 50,
+                width: 40,
                 child: Image.asset(
                   widget.logo,
                   color: (widget.name != 'DBMS') ? Colors.grey[300] : null,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learnsphere/screens/HomeScreen.dart';
 import 'package:learnsphere/screens/MainScreen.dart';
 import 'package:learnsphere/screens/RegistrationScreen.dart';
 import 'package:learnsphere/widgets/app_text_style.dart';
@@ -7,14 +6,14 @@ import 'package:learnsphere/widgets/colors.dart';
 import 'package:learnsphere/widgets/customer_text_feild.dart';
 import 'package:learnsphere/widgets/primary_button.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class Loginscreen extends StatefulWidget {
+  const Loginscreen({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<Loginscreen> createState() => _LoginscreenState();
 }
 
-class _loginState extends State<login> {
+class _LoginscreenState extends State<Loginscreen> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
@@ -50,7 +49,7 @@ class _loginState extends State<login> {
     final mediaQuery = MediaQuery.of(context);
     final width = mediaQuery.size.width;
     final height = mediaQuery.size.height;
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: Form(

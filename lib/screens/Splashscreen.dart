@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learnsphere/screens/LoginScreen.dart';
-import 'package:learnsphere/widgets/app_text.dart';
 import 'package:learnsphere/widgets/app_text_style.dart';
 import 'package:learnsphere/widgets/colors.dart';
 import 'package:learnsphere/widgets/primary_button.dart';
@@ -50,7 +49,7 @@ class Splashscreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => login()),
+                  MaterialPageRoute(builder: (context) => Loginscreen()),
                 );
               },
             ),

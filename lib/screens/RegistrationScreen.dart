@@ -5,7 +5,6 @@ import 'package:learnsphere/widgets/customer_text_feild.dart';
 import '../widgets/app_text_style.dart';
 import '../widgets/colors.dart';
 import '../widgets/primary_button.dart';
-import 'HomeScreen.dart';
 
 class Registrationscreen extends StatefulWidget {
   const Registrationscreen({super.key});
@@ -47,7 +46,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
       ).showSnackBar(SnackBar(content: Text('created account sucessfully')));
       Navigator.of(
         context,
-      ).pushReplacement(MaterialPageRoute(builder: (_) => login()));
+      ).pushReplacement(MaterialPageRoute(builder: (_) => Loginscreen()));
     }
   }
 
@@ -127,7 +126,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                     onPressed: () {
                       // navigate to login page
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (ctx) => login()),
+                        MaterialPageRoute(builder: (ctx) => Loginscreen()),
                       );
                     },
                     child: Text(
