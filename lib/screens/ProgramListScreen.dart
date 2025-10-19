@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnsphere/screens/ProgramType.dart';
 
 import '../data/program_data.dart';
 import '../widgets/colors.dart';
@@ -80,6 +81,13 @@ class _ProgramlistScreenState extends State<ProgramlistScreen> {
               courses: coursesData[index]['courses'],
               articles: coursesData[index]['articles'],
               logo: coursesData[index]['logo'],
+              onClick: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => Programtype(data: coursesData[index]),
+                  ),
+                );
+              },
             ),
           ),
         ),

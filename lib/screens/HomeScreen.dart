@@ -160,6 +160,9 @@ class _HomescreenState extends State<Homescreen> {
                     courses: coursesData[index]['courses'],
                     articles: coursesData[index]['articles'],
                     logo: coursesData[index]['logo'],
+                    onClick: (){
+                      // nothing
+                    },
                   ),
                 ),
               ),
