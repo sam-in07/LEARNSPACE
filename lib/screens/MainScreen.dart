@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnsphere/screens/HomeScreen.dart';
+import 'package:learnsphere/screens/ProfileScreen.dart';
 import 'package:learnsphere/widgets/colors.dart';
 
 class Mainscreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _MainscreenState extends State<Mainscreen> {
     Homescreen(),
     Homescreen(),
     Homescreen(),
-    Homescreen(),
+    Profilescreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,12 +40,12 @@ class _MainscreenState extends State<Mainscreen> {
             icon: Icon(Icons.menu_book),
           ),
           BottomNavigationBarItem(
-            label: 'Task',
-            icon: Icon(Icons.task_alt_outlined),
+            label: 'My Learning',
+            icon: Icon(Icons.my_location_sharp),
           ),
           BottomNavigationBarItem(
-            label: 'Calender',
-            icon: Icon(Icons.calendar_month_rounded),
+            label: 'Task',
+            icon: Icon(Icons.task_alt_outlined),
           ),
           BottomNavigationBarItem(
             label: 'Profile',
