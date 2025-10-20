@@ -107,7 +107,7 @@ This project uses Git for version control.
 
 ### 🔐 Login Screen
 
-![Login Screen](assets/images/screenshots/Login Page.jpeg)
+![Login Screen](assets/images/screenshots/Login_Page.jpeg)
 
 ---
 
@@ -122,7 +122,7 @@ This project uses Git for version control.
 ---
 
 ### 📄 Program Details Screen
-![Program Details](assets/images/screenshots/Progrm Details.jpeg)
+![Program Details](assets/images/screenshots/Program_Details.jpeg)
 
 ---
 
