@@ -101,4 +101,27 @@ This project uses Git for version control.
 
 
 
+---
+
+## 📸 UI Screenshots (Week 2 Prototype)
+
+### 🔐 Login Screen
+![Login Screen](assets/images/screenshots/Login Page.jpeg)
+
+---
+
+### 🏠 Home Screen
+![Home Screen](assets/images/screenshots/Homepage.jpeg)
+
+---
+
+### 📋 Program Listing Screen
+![Program Listing](assets/images/screenshots/program_listing.jpeg)
+
+---
+
+### 📄 Program Details Screen
+![Program Details](assets/images/screenshots/Progrm Details.jpeg)
+
+---
 
