@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnsphere/screens/HomeScreen.dart';
 import 'package:learnsphere/screens/ProfileScreen.dart';
-import 'package:learnsphere/screens/ProgramListScreen.dart';
+import 'package:learnsphere/screens/ProgramScreens/ProgramListScreen.dart';
 import 'package:learnsphere/widgets/colors.dart';
 
 class Mainscreen extends StatefulWidget {

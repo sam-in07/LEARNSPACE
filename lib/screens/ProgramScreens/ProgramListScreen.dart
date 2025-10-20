@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:learnsphere/screens/ProgramType.dart';
+import 'package:learnsphere/screens/ProgramScreens/ProgramType.dart';
 
-import '../data/program_data.dart';
-import '../widgets/colors.dart';
-import '../widgets/learning_card.dart';
+import '../../data/program_data.dart';
+import '../../widgets/colors.dart';
+import '../../widgets/learning_card.dart';
 
 class ProgramlistScreen extends StatefulWidget {
   const ProgramlistScreen({super.key});
