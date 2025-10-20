@@ -12,6 +12,7 @@ class _ProgramdetailscreenState extends State<Programdetailscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF9FAFB),
       appBar: AppBar(
         title: Text('Program Details'),
         actions: [Icon(Icons.share_outlined), SizedBox(width: 10)],
