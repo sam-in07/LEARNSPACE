@@ -1,7 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:learnsphere/screens/ProgramScreens/ProgramType.dart';
-
-import '../../data/program_data.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/learning_card.dart';
 
@@ -13,36 +12,41 @@ class ProgramlistScreen extends StatefulWidget {
 }
 
 class _ProgramlistScreenState extends State<ProgramlistScreen> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+
     return ListView(
       children: [
+        // Header title
         Container(
           width: double.infinity,
-          padding: EdgeInsets.only(left: 15, top: 15),
-          child: Text(
+          padding: const EdgeInsets.only(left: 15, top: 15),
+          child: const Text(
             'Programs List',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
+
+        // Gradient banner
         Container(
           padding: EdgeInsets.symmetric(horizontal: width * 0.06, vertical: 15),
           width: width,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [AppColors.primaryColor, AppColors.lightPurple],
-              begin: AlignmentGeometry.topLeft,
+              begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
           child: Column(
-            spacing: 10,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Learn Your favourite Coding \nLanguage in All',
+              const Text(
+                'Learn Your Favourite Coding \nLanguage in All',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -61,35 +65,70 @@ class _ProgramlistScreenState extends State<ProgramlistScreen> {
           ),
         ),
 
-        // filters
+        const SizedBox(height: 10),
+
+        // Filters (optional)
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: List.generate(filterData.length, (index) {
-              return chipText(filterData[index]['title']);
-            }),
+            children: [
+              chipText("All"),
+              chipText("Popular"),
+              chipText("Beginner"),
+              chipText("Advanced"),
+            ],
           ),
         ),
 
-        // list of course
-        Column(
-          children: List.generate(
-            coursesData.length,
-            (index) => LearningCard(
-              name: coursesData[index]['name'],
-              learners: coursesData[index]['learners'],
-              courses: coursesData[index]['courses'],
-              articles: coursesData[index]['articles'],
-              logo: coursesData[index]['logo'],
-              onClick: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (ctx) => Programtype(data: coursesData[index]),
-                  ),
+        const SizedBox(height: 10),
+
+        // 🔥 Firestore Data List
+        StreamBuilder<QuerySnapshot>(
+          stream: _firestore.collection('programs').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+
+            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text('No programs found.'),
+                ),
+              );
+            }
+
+            final programs = snapshot.data!.docs;
+
+            return Column(
+              children: List.generate(programs.length, (index) {
+                final program = programs[index].data() as Map<String, dynamic>;
+
+                return LearningCard(
+                  name: program['program_name'] ?? 'No name',
+                  learners: program['total_learners'] ?? '0',
+                  courses: program['total_courses'] ?? '0',
+                  articles: '5 articles',
+                  logo:
+                      program['logo_url'] ??
+                      'https://cdn-icons-png.flaticon.com/512/732/732212.png', // fallback image
+                  onClick: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => Programtype(data: program),
+                      ),
+                    );
+                  },
                 );
-              },
-            ),
-          ),
+              }),
+            );
+          },
         ),
       ],
     );
@@ -98,7 +137,7 @@ class _ProgramlistScreenState extends State<ProgramlistScreen> {
   Widget chipText(String name) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      margin: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0),
+      margin: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: const Color.fromARGB(255, 226, 230, 234),
@@ -106,7 +145,7 @@ class _ProgramlistScreenState extends State<ProgramlistScreen> {
       child: Center(
         child: Text(
           name,
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
         ),
       ),
     );

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:learnsphere/data/programdetails_data.dart';
 
 class Programdetailscreen extends StatefulWidget {
-  const Programdetailscreen({super.key});
+  final Map<String, dynamic> courseData;
+
+  const Programdetailscreen({super.key, required this.courseData});
 
   @override
   State<Programdetailscreen> createState() => _ProgramdetailscreenState();
@@ -11,23 +13,74 @@ class Programdetailscreen extends StatefulWidget {
 class _ProgramdetailscreenState extends State<Programdetailscreen> {
   @override
   Widget build(BuildContext context) {
+    final modules = widget.courseData['modules'] as List<dynamic>;
+    final instructor = widget.courseData['instructor_details'][0];
+
     return Scaffold(
-      backgroundColor: Color(0xFFF9FAFB),
+      backgroundColor: const Color(0xFFF9FAFB),
       appBar: AppBar(
-        title: Text('Program Details'),
-        actions: [Icon(Icons.share_outlined), SizedBox(width: 10)],
+        title: Text(widget.courseData['title']),
+        backgroundColor: Colors.white,
+        actions: const [Icon(Icons.share_outlined), SizedBox(width: 10)],
         elevation: 0,
       ),
 
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Instructor Info
+            Container(
+              padding: const EdgeInsets.all(16),
+              color: Colors.white,
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage: AssetImage(
+                      'assets/images/person/person.jpg',
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        instructor['name'],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        '${instructor['rating']} ★ | ${instructor['total_courses']} Courses',
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // Description
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                widget.courseData['description'],
+                style: const TextStyle(color: Colors.black87, fontSize: 14),
+              ),
+            ),
+
+            // Modules List
             Column(
-              children: List.generate(programDetailsData.length, (index) {
+              children: List.generate(modules.length, (index) {
+                final module = modules[index];
                 return programCard(
                   index + 1,
-                  programDetailsData[index]['title'],
-                  programDetailsData[index]['courseTitle'],
+                  module['module_name'],
+                  List<String>.from(module['topics']),
+                  module['total_hours'],
+                  module['chapters'],
                 );
               }),
             ),
@@ -48,12 +101,66 @@ class _ProgramdetailscreenState extends State<Programdetailscreen> {
             ),
           ),
           onPressed: () {},
-          child: Text('Start Learning', style: TextStyle(color: Colors.white)),
+          child: const Text(
+            'Start Learning',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+
+  Widget programCard(
+    int index,
+    String title,
+    List<String> topics,
+    String hours,
+    String chapters,
+  ) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(width: 0.8, color: Colors.grey.shade400),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: ExpansionTile(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(width: 0.5, color: Colors.grey.shade400),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'MODULE $index',
+              style: TextStyle(color: Colors.grey[500], fontSize: 13),
+            ),
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+            ),
+          ],
+        ),
+        subtitle: Text(
+          '$hours | $chapters',
+          style: TextStyle(color: Colors.grey[600], fontSize: 12),
+        ),
+        children: topics.map((t) => description(t)).toList(),
+      ),
+    );
+  }
+
+  // Widget description(String text) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+  //     child: Text(
+  //       text,
+  //       style: TextStyle(color: Colors.grey[700], fontSize: 13),
+  //     ),
+  //   );
+  // }
 
   Widget description(String text) {
     return Column(
@@ -77,59 +184,6 @@ class _ProgramdetailscreenState extends State<Programdetailscreen> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget programCard(int index, String title, List<String> courseDecription) {
-    return Container(
-      margin: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0),
-      // padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(width: 0.8, color: Colors.grey.shade400),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: ExpansionTile(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.5, color: Colors.grey.shade400),
-          borderRadius: BorderRadiusGeometry.circular(12),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'MODULE ${index.toString()}',
-              style: TextStyle(
-                color: Colors.grey[500],
-                fontWeight: FontWeight.w500,
-                fontSize: 13,
-              ),
-            ),
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
-            ),
-          ],
-        ),
-        subtitle: Text(
-          '1h 42m | 7 chapters',
-          style: TextStyle(
-            color: Colors.grey[500],
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-          ),
-        ),
-        // children: [
-        //   description('Introduction to python and SQL for Data Science Course'),
-        //   description('Python , Anaconda and relevant package installations'),
-        //   description('Why learn Pyhthon?'),
-        //   description('Keywords and identifiers'),
-        //   description('comments, indentation and statement'),
-        // ],
-        children: List.generate(courseDecription.length, (index) {
-          return description(courseDecription[index]);
-        }),
-      ),
     );
   }
 }

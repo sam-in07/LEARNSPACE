@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:learnsphere/screens/ProgramScreens/ProgramDetailScreen.dart';
 import 'package:learnsphere/widgets/colors.dart';
@@ -12,35 +13,89 @@ class Programtype extends StatefulWidget {
 }
 
 class _ProgramtypeState extends State<Programtype> {
+  late final FirebaseFirestore _firestore;
+  late final String programId;
+
+  @override
+  void initState() {
+    super.initState();
+    _firestore = FirebaseFirestore.instance;
+    programId = widget.data['program_name'].toString().toLowerCase();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          // app bar
           appBar(),
           Expanded(
-            child: ListView(
-              children: List.generate(5, (index) {
-                return programCard();
-              }),
+            child: StreamBuilder<QuerySnapshot>(
+              stream: _firestore
+                  .collection('course_list')
+                  .doc(programId)
+                  .collection('courses')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                      child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: CircularProgressIndicator(),
+                  ));
+                }
+
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Center(
+                    child: Text("No courses available for this program."),
+                  );
+                }
+
+                final courses = snapshot.data!.docs;
+
+                return ListView.builder(
+                  itemCount: courses.length,
+                  itemBuilder: (context, index) {
+                    final course =
+                        courses[index].data() as Map<String, dynamic>;
+
+                    final instructor = (course['instructor_details'] != null &&
+                            course['instructor_details'].isNotEmpty)
+                        ? course['instructor_details'][0]
+                        : {};
+
+                    return programCard(
+                      title: course['title'] ?? 'Untitled Course',
+                      instructor: instructor['name'] ?? 'Unknown Instructor',
+                      rating: instructor['rating'] ?? '0',
+                      totalHours: course['total_hours'] ?? '--',
+                      course: course
+                    );
+                  },
+                );
+              },
             ),
           ),
-          // SizedBox(height: 20),
-
-          // courses
         ],
       ),
     );
   }
 
-  // program card
-  Widget programCard() {
+  // 🔹 Program card (for each course)
+  Widget programCard({
+    required String title,
+    required String instructor,
+    required String rating,
+    required String totalHours,
+    required Map<String, dynamic> course
+  }) {
     return InkWell(
       onTap: () {
-        Navigator.of(
-          context,
-        ).push(MaterialPageRoute(builder: (ctx) => Programdetailscreen()));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => Programdetailscreen(courseData: course,),
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0),
@@ -51,22 +106,22 @@ class _ProgramtypeState extends State<Programtype> {
         ),
         child: Row(
           children: [
-            // logo
+            // logo/instructor image section
             Stack(
               alignment: Alignment.center,
               children: [
                 Container(
                   height: 170,
                   width: 120,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
                       bottomLeft: Radius.circular(12),
                     ),
                     gradient: LinearGradient(
                       colors: [
-                        const Color.fromARGB(255, 49, 24, 74),
-                        const Color.fromARGB(255, 69, 47, 122),
+                        Color.fromARGB(255, 49, 24, 74),
+                        Color.fromARGB(255, 69, 47, 122),
                       ],
                     ),
                   ),
@@ -81,18 +136,13 @@ class _ProgramtypeState extends State<Programtype> {
                   right: 0,
                   bottom: 0,
                   left: 0,
-                  child: ClipRRect(
-                    borderRadius: BorderRadiusGeometry.only(
-                      bottomLeft: Radius.circular(12),
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.only(top: 5, bottom: 3),
-                      color: Colors.pink[700],
-                      child: Center(
-                        child: Text(
-                          'Rahul Janghu',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 5, bottom: 3),
+                    color: Colors.pink[700],
+                    child: Center(
+                      child: Text(
+                        instructor,
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -100,53 +150,55 @@ class _ProgramtypeState extends State<Programtype> {
               ],
             ),
 
-            // other details
-            Container(
-              margin: const EdgeInsets.all(8),
-              child: Column(
-                spacing: 8.0,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // chip text
-                  Row(spacing: 5, children: [chipText(true), chipText(false)]),
-
-                  // title
-                  SizedBox(
-                    width: 190,
-                    child: Text(
-                      'Pyhton Courses For Beginner with Certification',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
+            // details
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.all(8),
+                child: Column(
+                  spacing: 8.0,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      spacing: 5,
+                      children: [
+                        chipText(true),
+                        chipText(false),
+                      ],
                     ),
-                  ),
-
-                  Row(
-                    spacing: 5.0,
-                    children: [
-                      iconText('236064 Learners', Icons.person_4_outlined),
-                      iconText('14h 46m', Icons.alarm),
-                    ],
-                  ),
-
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      // maximumSize: Size(120, 60),
-                      fixedSize: Size(200, 35),
-                      padding: EdgeInsets.all(10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(8),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                     ),
-                    onPressed: () {},
-                    child: Text(
-                      'Start Learning',
-                      style: TextStyle(color: Colors.white),
+                    Row(
+                      spacing: 5.0,
+                      children: [
+                        iconText('$rating ★ Rating', Icons.star_outline),
+                        iconText(totalHours, Icons.alarm),
+                      ],
                     ),
-                  ),
-                ],
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        fixedSize: const Size(200, 35),
+                        padding: const EdgeInsets.all(10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        'Start Learning',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -175,10 +227,8 @@ class _ProgramtypeState extends State<Programtype> {
     final chipTextColor = (isRegistered) ? Colors.green : Colors.black54;
     return Container(
       padding: const EdgeInsets.all(4),
-
       decoration: BoxDecoration(
         color: chipColor,
-        shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(text, style: TextStyle(color: chipTextColor, fontSize: 12)),
@@ -198,18 +248,16 @@ class _ProgramtypeState extends State<Programtype> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // logo
-              Image.asset(
-                widget.data['logo'],
+              Image.network(
+                widget.data['logo_url'] ?? '',
                 height: 50,
                 width: 50,
-                color: Colors.grey[400],
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.image_not_supported, color: Colors.white),
               ),
-
-              // title
               Text(
-                ' ${widget.data['name']} Hub',
-                style: TextStyle(
+                ' ${widget.data['program_name']} Hub',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -218,15 +266,12 @@ class _ProgramtypeState extends State<Programtype> {
             ],
           ),
         ),
-
         Positioned(
           top: 20,
           left: 20,
           child: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () => Navigator.of(context).pop(),
+            icon: const Icon(Icons.arrow_back_ios_rounded),
             color: Colors.white,
           ),
         ),
