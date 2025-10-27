@@ -8,24 +8,24 @@ class FirebaseService {
     try {
       final res = await firebaseInstance
           .collection('course_list')
-          .doc('python')
+          .doc('sql')
           .collection('courses')
           .add({
-            "title": "Python and SQL for Data Science",
+            "title": "Sql v/s NoSql",
             "instructor_details": [
               {
-                "name": "Srikanth Varma",
+                "name": "Mohit Yadav",
                 "rating": "5",
-                "total_courses": "9",
-                "about": "Lead DSML Instructor at Scaler",
+                "total_courses": "1",
+                "about": "Instructor @ Scaler Academy",
               },
             ],
-            "description": "Introduction to Python & Data Science",
-            "total_hours": "14h 46m",
+            "description": "SQL v/s NoSql",
+            "total_hours": "10h 14m",
             "modules": [
               {
-                "module_name": "Introduction",
-                "total_hours": "10m",
+                "module_name": "SQL v/s NoSql",
+                "total_hours": "48m",
                 "chapters": "3 chapters",
                 "topics": [
                   "Introduction to python for Beginners",
@@ -33,99 +33,112 @@ class FirebaseService {
                   "Pre-requisite for Python",
                 ],
               },
-              {
-                "module_name": "Installation",
-                "total_hours": "4m",
-                "chapters": "1 chapters",
-                "topics": ["Setting up Anaconda"],
-              },
-              {
-                "module_name": "Basic Fundamentals of Python",
-                "total_hours": "41m",
-                "chapters": "7 chapters",
-                "topics": [
-                  "Print Hello World",
-                  "Variables",
-                  "Stack & Heap Memory",
-                  "Id function",
-                  "Python comments",
-                  "Data Types in Python",
-                  "Input function in Python",
-                ],
-              },
-              {
-                "module_name": "Print Function",
-                "total_hours": "12m",
-                "chapters": "5 chapters",
-                "topics": [
-                  "Printing Multiple Values",
-                  "Default Sep & End in Print",
-                  "Changing default separator end in Print",
-                  "Changing default end in Print ",
-                  "Challenge 4 - Print function",
-                ],
-              },
-              {
-                "module_name": "Operators in Python",
-                "total_hours": "39m",
-                "chapters": "9 chapters",
-                "topics": [
-                  "Intro to Python Operators",
-                  "Arithmetic Operators",
-                  "Arithmetic Operator Continued",
-                  "Cmparison Operators",
-                  "Assignment Operators",
-                  "Logical and Operator",
-                  "Logical or & not Operator",
-                  "Special Operator",
-                  "Challend 5 - Python Operator Expertise",
-                ],
-              },
-              {
-                "module_name": "Control Flow",
-                "total_hours": "37m",
-                "chapters": "7 chapters",
-                "topics": [
-                  "Control Flow Introduction",
-                  "Syntax of If Else",
-                  "If elif & else",
-                  "Challenge : print largest",
-                  "challenge: Grading System",
-                  "Challenge 6- Control Flow",
-                ],
-              },
-              {
-                "module_name": "Loops in Python",
-                "total_hours": "53m",
-                "chapters": "5 chapters",
-                "topics": [
-                  "Into to Python Loops",
-                  "While Loop",
-                  "Print numbers using Python loop",
-                  "print even Number in Given Range",
-                  "Range Function",
-                ],
-              },
-              {
-                "module_name": "Strings in Python",
-                "total_hours": "53m",
-                "chapters": "7 chapters",
-                "topics": [
-                  "Strings in Python",
-                  "ord and chr in Python",
-                  "Indexing in String",
-                  "Accessing a character in String",
-                  "String Slicing",
-                  "String Methods part1",
-                  "String Methods part2",
-                ],
-              },
+              // {
+              //   "module_name": "Querying Single Table",
+              //   "total_hours": "4m",
+              //   "chapters": "1 chapters",
+              //   "topics": ["Setting up Anaconda"],
+              // },
+              // {
+              //   "module_name": "Querying Multiple Table",
+              //   "total_hours": "41m",
+              //   "chapters": "7 chapters",
+              //   "topics": [
+              //     "Print Hello World",
+              //     "Variables",
+              //     "Stack & Heap Memory",
+              //     "Id function",
+              //     "Python comments",
+              //     "Data Types in Python",
+              //     "Input function in Python",
+              //   ],
+              // },
+              // {
+              //   "module_name": "Data Agregation and Summarization",
+              //   "total_hours": "12m",
+              //   "chapters": "5 chapters",
+              //   "topics": [
+              //     "Printing Multiple Values",
+              //     "Default Sep & End in Print",
+              //     "Changing default separator end in Print",
+              //     "Changing default end in Print ",
+              //     "Challenge 4 - Print function",
+              //   ],
+              // },
+              // {
+              //   "module_name": "SubQueries / Complex Queries",
+              //   "total_hours": "39m",
+              //   "chapters": "9 chapters",
+              //   "topics": [
+              //     "Intro to Python Operators",
+              //     "Arithmetic Operators",
+              //     "Arithmetic Operator Continued",
+              //     "Cmparison Operators",
+              //     "Assignment Operators",
+              //     "Logical and Operator",
+              //     "Logical or & not Operator",
+              //     "Special Operator",
+              //     "Challend 5 - Python Operator Expertise",
+              //   ],
+              // },
+              // {
+              //   "module_name": "Functional Programming",
+              //   "total_hours": "37m",
+              //   "chapters": "7 chapters",
+              //   "topics": [
+              //     "Control Flow Introduction",
+              //     "Syntax of If Else",
+              //     "If elif & else",
+              //     "Challenge : print largest",
+              //     "challenge: Grading System",
+              //     "Challenge 6- Control Flow",
+              //   ],
+              // },
+              // {
+              //   "module_name": "Object Oriented JavaScript",
+              //   "total_hours": "53m",
+              //   "chapters": "5 chapters",
+              //   "topics": [
+              //     "Into to Python Loops",
+              //     "While Loop",
+              //     "Print numbers using Python loop",
+              //     "print even Number in Given Range",
+              //     "Range Function",
+              //   ],
+              // },
+              // {
+              //   "module_name": "Asynchronous JavaScript",
+              //   "total_hours": "53m",
+              //   "chapters": "7 chapters",
+              //   "topics": [
+              //     "Strings in Python",
+              //     "ord and chr in Python",
+              //     "Indexing in String",
+              //     "Accessing a character in String",
+              //     "String Slicing",
+              //     "String Methods part1",
+              //     "String Methods part2",
+              //   ],
+              // },
+              // {
+              //   "module_name": "Miscellaneous Topics",
+              //   "total_hours": "1h 3m",
+              //   "chapters": "5 chapters",
+              //   "topics": [
+              //     "Strings in Python",
+              //     "ord and chr in Python",
+              //     "Indexing in String",
+              //     "Accessing a character in String",
+              //     "String Slicing",
+              //   ],
+              // },
+              
             ],
           });
 
       // print('res : $res');
 
-      print("✅ Course added to Python!");
+      print("✅ Course added to data structures!");
     } catch (e) {
       print("❌ Error adding course: $e");
     }
@@ -147,41 +160,46 @@ class FirebaseService {
   }
 
   void addPrograms() async {
-    try {
-      // Add the "Data Structures" program
-      await firebaseInstance.collection('programs').doc('sql').set({
-        "program_name": "SQL",
-        "total_courses": "3",
-        "total_learners": "22k",
-        "logo_url": "assets/images/program_images/sql.png"
-      });
-      await firebaseInstance.collection('programs').doc('html').set({
-        "program_name": "HTML",
-        "total_courses": "",
-        "total_learners": "19k",
-        "logo_url": "assets/images/program_images/html.png"
-      });
-       await firebaseInstance.collection('programs').doc('software_engineering').set({
-        "program_name": "Softwar Eengineering",
-        "total_courses": "1",
-        "total_learners": "14k",
-        "logo_url": "assets/images/program_images/softwareengineering.png"
-      });
-       await firebaseInstance.collection('programs').doc('react').set({
-        "program_name": "React",
-        "total_courses": "",
-        "total_learners": "10k",
-        "logo_url": "assets/images/program_images/react.png"
-      });
-      await firebaseInstance.collection('programs').doc('css').set({
-        "program_name": "CSS",
-        "total_courses": "1",
-        "total_learners": "9k",
-        "logo_url": "assets/images/program_images/css.png"
-      });
+    // try {
+    //   // Add the "Data Structures" program
+    //   await firebaseInstance.collection('programs').doc('sql').set({
+    //     "program_name": "SQL",
+    //     "total_courses": "3",
+    //     "total_learners": "22k",
+    //     "logo_url": "assets/images/program_images/sql.png"
+    //   });
+    //   await firebaseInstance.collection('programs').doc('html').set({
+    //     "program_name": "HTML",
+    //     "total_courses": "",
+    //     "total_learners": "19k",
+    //     "logo_url": "assets/images/program_images/html.png"
+    //   });
+    //    await firebaseInstance.collection('programs').doc('software_engineering').set({
+    //     "program_name": "Softwar Eengineering",
+    //     "total_courses": "1",
+    //     "total_learners": "14k",
+    //     "logo_url": "assets/images/program_images/softwareengineering.png"
+    //   });
+    //    await firebaseInstance.collection('programs').doc('react').set({
+    //     "program_name": "React",
+    //     "total_courses": "",
+    //     "total_learners": "10k",
+    //     "logo_url": "assets/images/program_images/react.png"
+    //   });
+    //   await firebaseInstance.collection('programs').doc('css').set({
+    //     "program_name": "CSS",
+    //     "total_courses": "1",
+    //     "total_learners": "9k",
+    //     "logo_url": "assets/images/program_images/css.png"
+    //   });
 
-      // Fetch all programs
-      final snapshot = await firebaseInstance.collection('programs').get();
+    //   // Fetch all programs
+      
+    // } catch (e) {
+    //   print('🔥 Error: $e');
+    // }
+
+    final snapshot = await firebaseInstance.collection('programs').get();
 
       // Loop through all program documents
       for (var doc in snapshot.docs) {
@@ -192,9 +210,6 @@ class FirebaseService {
          print('Logo: ${doc['logo_url']}');
         print('--------------------------');
       }
-    } catch (e) {
-      print('🔥 Error: $e');
-    }
   }
 
   void updateLogoUrls() async {

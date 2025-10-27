@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learnsphere/data/programdetails_data.dart';
 
 class Programdetailscreen extends StatefulWidget {
   final Map<String, dynamic> courseData;
@@ -26,6 +25,7 @@ class _ProgramdetailscreenState extends State<Programdetailscreen> {
       ),
 
       body: SingleChildScrollView(
+        physics: ScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -84,6 +84,7 @@ class _ProgramdetailscreenState extends State<Programdetailscreen> {
                 );
               }),
             ),
+            SizedBox(height: 175),
           ],
         ),
       ),

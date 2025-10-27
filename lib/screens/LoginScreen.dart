@@ -71,6 +71,17 @@ class _LoginscreenState extends State<Loginscreen> {
                 controller: _emailController,
                 labelText: 'Email Address',
                 hintText: 'Enter your email',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter email correctly";
+                  }
+                  final emailRegex = RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  );
+                  if (!emailRegex.hasMatch(value)) {
+                    return "Enter a valid email address";
+                  }
+                },
               ),
 
               const SizedBox(height: 24.0),
@@ -80,6 +91,16 @@ class _LoginscreenState extends State<Loginscreen> {
                 labelText: 'Password',
                 hintText: 'Enter your password',
                 isPassword: true,
+                validator: (value) {
+                 
+                    if (value == null || value.isEmpty) {
+                      return "Enter password correctly";
+                    }
+                    if (value.length < 8) {
+                      return "Enter at least 8 characters";
+                    }
+                
+                },
               ),
 
               SizedBox(height: height * 0.07),

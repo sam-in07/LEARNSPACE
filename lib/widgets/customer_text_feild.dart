@@ -7,6 +7,7 @@ class CustomerTextField extends StatefulWidget {
   final String hintText;
   final Widget? prefixWidget;
   final bool isPassword;
+  final String? Function(String?)? validator; // ✅ Optional validator
 
   const CustomerTextField({
     super.key,
@@ -15,6 +16,7 @@ class CustomerTextField extends StatefulWidget {
     required this.hintText,
     this.prefixWidget,
     this.isPassword = false,
+    this.validator, // ✅ Optional
   });
 
   @override
@@ -36,35 +38,33 @@ class _CustomerTextFieldState extends State<CustomerTextField> {
 
     return Padding(
       padding: EdgeInsets.only(
-        left: screenWidth * 0.12, // ≈46px on a 375–400px wide screen
+        left: screenWidth * 0.12,
         right: screenWidth * 0.12,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Label
           Text(
             widget.labelText,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8.0),
 
-          // Text Field
           TextFormField(
             controller: widget.controller,
             obscureText: _isObscure,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "enter ${widget.labelText.toLowerCase()} correctly";
-              }
-            },
+            validator: widget.validator ??
+                (value) {
+                  // Default validator logic if custom one isn't passed
+                  if (value == null || value.isEmpty) {
+                    return "Enter ${widget.labelText.toLowerCase()} correctly";
+                  }
+                  return null;
+                },
             decoration: InputDecoration(
               hintText: widget.hintText,
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 16.0,
-                horizontal: 12.0,
-              ),
-
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
               fillColor: AppColors.textgry,
               filled: true,
               prefixIcon: widget.prefixWidget,

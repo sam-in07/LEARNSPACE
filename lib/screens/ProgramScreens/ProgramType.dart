@@ -39,15 +39,30 @@ class _ProgramtypeState extends State<Programtype> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
-                      child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: CircularProgressIndicator(),
-                  ));
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
                 }
 
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(
-                    child: Text("No courses available for this program."),
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 5.0,
+                      children: [
+                        Text(
+                          "New Courses are coming soon!",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          'We are preparing new Course for You.\nExplore other Courses till then.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.grey.shade400),
+                        ),
+                      ],
+                    ),
                   );
                 }
 
@@ -59,7 +74,8 @@ class _ProgramtypeState extends State<Programtype> {
                     final course =
                         courses[index].data() as Map<String, dynamic>;
 
-                    final instructor = (course['instructor_details'] != null &&
+                    final instructor =
+                        (course['instructor_details'] != null &&
                             course['instructor_details'].isNotEmpty)
                         ? course['instructor_details'][0]
                         : {};
@@ -69,7 +85,7 @@ class _ProgramtypeState extends State<Programtype> {
                       instructor: instructor['name'] ?? 'Unknown Instructor',
                       rating: instructor['rating'] ?? '0',
                       totalHours: course['total_hours'] ?? '--',
-                      course: course
+                      course: course,
                     );
                   },
                 );
@@ -87,13 +103,13 @@ class _ProgramtypeState extends State<Programtype> {
     required String instructor,
     required String rating,
     required String totalHours,
-    required Map<String, dynamic> course
+    required Map<String, dynamic> course,
   }) {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (ctx) => Programdetailscreen(courseData: course,),
+            builder: (ctx) => Programdetailscreen(courseData: course),
           ),
         );
       },
@@ -160,10 +176,7 @@ class _ProgramtypeState extends State<Programtype> {
                   children: [
                     Row(
                       spacing: 5,
-                      children: [
-                        chipText(true),
-                        chipText(false),
-                      ],
+                      children: [chipText(true), chipText(false)],
                     ),
                     SizedBox(
                       width: double.infinity,
@@ -172,7 +185,9 @@ class _ProgramtypeState extends State<Programtype> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                     Row(

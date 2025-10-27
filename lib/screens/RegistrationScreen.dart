@@ -18,6 +18,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   late TextEditingController _confirmPasswordController;
+  late TextEditingController _phoneController;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -28,6 +29,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
+    _phoneController = TextEditingController();
   }
 
   @override
@@ -37,6 +39,7 @@ class _RegistrationscreenState extends State<Registrationscreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _phoneController.dispose();
   }
 
   void _submitForm() {
@@ -83,18 +86,62 @@ class _RegistrationscreenState extends State<Registrationscreen> {
                 controller: _emailController,
                 labelText: 'Email',
                 hintText: 'enter your email',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter email correctly";
+                  }
+                  final emailRegex = RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  );
+                  if (!emailRegex.hasMatch(value)) {
+                    return "Enter a valid email address";
+                  }
+                },
+              ),
+              CustomerTextField(
+                controller: _phoneController,
+                labelText: 'Phone Number',
+                hintText: 'enter your Mobile Number',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter Number correctly";
+                  }
+                  if (value.length < 10 || value.length > 10) {
+                    return "Enter 10 digit";
+                  }
+                },
               ),
               CustomerTextField(
                 controller: _passwordController,
                 labelText: 'Password',
                 hintText: 'enter your password',
                 isPassword: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter password correctly";
+                  }
+                  if (value.length < 8) {
+                    return "Enter at least 8 characters";
+                  }
+                },
               ),
               CustomerTextField(
                 controller: _confirmPasswordController,
                 labelText: 'Confirm Password',
                 hintText: 'confirm your password',
                 isPassword: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter password correctly";
+                  }
+                  if (value.length < 8) {
+                    return "Enter at least 8 characters";
+                  }
+                  if (_confirmPasswordController.text !=
+                      _passwordController.text) {
+                    return 'Enter the same password as above';
+                  }
+                },
               ),
 
               SizedBox(height: 25),
