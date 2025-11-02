@@ -4,6 +4,8 @@ import 'package:learnsphere/screens/ProfileScreen.dart';
 import 'package:learnsphere/screens/ProgramScreens/ProgramListScreen.dart';
 import 'package:learnsphere/widgets/colors.dart';
 
+import 'MyProgramScreen.dart';
+
 class Mainscreen extends StatefulWidget {
   const Mainscreen({super.key});
 
@@ -16,8 +18,8 @@ class _MainscreenState extends State<Mainscreen> {
   final List<Widget> _pages = [
     Homescreen(),
     ProgramlistScreen(),
-    Homescreen(),
-    Homescreen(),
+    Myprogramscreen(),
+    // Homescreen(),
     Profilescreen(),
   ];
   @override
@@ -45,10 +47,10 @@ class _MainscreenState extends State<Mainscreen> {
             label: 'My Learning',
             icon: Icon(Icons.my_location_sharp),
           ),
-          BottomNavigationBarItem(
-            label: 'Task',
-            icon: Icon(Icons.task_alt_outlined),
-          ),
+          // BottomNavigationBarItem(
+          //   label: 'Task',
+          //   icon: Icon(Icons.task_alt_outlined),
+          // ),
           BottomNavigationBarItem(
             label: 'Profile',
             icon: Icon(Icons.person_pin),
