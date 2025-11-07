@@ -43,6 +43,9 @@ dependencies:
   # Firebase
   firebase_core: ^4.2.0
   cloud_firestore: ^6.0.3
+  youtube_player_iframe: ^5.2.0
+  flutter_rating_bar: ^4.0.1
+
 
 
 
@@ -77,6 +80,7 @@ flutter:
     - assets/images/program_images/
     - assets/images/social_media/
     - assets/images/person/
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

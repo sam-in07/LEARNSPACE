@@ -158,7 +158,8 @@ class _MyprogramscreenState extends State<Myprogramscreen> {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (ctx) => Programdetailscreen(courseData: course),
+            builder: (ctx) =>
+                Programdetailscreen(courseData: course, isLearning: true),
           ),
         );
       },

@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:learnsphere/widgets/colors.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+
+import '../Feedback_page.dart';
 
 class Programdetailscreen extends StatefulWidget {
   final Map<String, dynamic> courseData;
+  bool isLearning;
 
-  const Programdetailscreen({super.key, required this.courseData});
+  Programdetailscreen({
+    super.key,
+    required this.courseData,
+    this.isLearning = false,
+  });
 
   @override
   State<Programdetailscreen> createState() => _ProgramdetailscreenState();
 }
 
 class _ProgramdetailscreenState extends State<Programdetailscreen> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     final modules = widget.courseData['modules'] as List<dynamic>;
@@ -24,91 +34,104 @@ class _ProgramdetailscreenState extends State<Programdetailscreen> {
         elevation: 0,
       ),
 
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Instructor Info
-            Container(
-              padding: const EdgeInsets.all(16),
-              color: Colors.white,
-              child: Row(
+      body: (isLoading)
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              physics: ScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundImage: AssetImage(
-                      'assets/images/person/person.jpg',
+                  // Instructor Info
+                  (widget.isLearning == false)
+                      ? aboutAuthor(instructor)
+                      : YoutubeVideoIframe(),
+
+                  // Description
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      widget.courseData['description'],
+                      style: const TextStyle(
+                        color: Colors.black87,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+
+                  // Modules List
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        instructor['name'],
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        '${instructor['rating']} ★ | ${instructor['total_courses']} Courses',
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    ],
+                    children: List.generate(modules.length, (index) {
+                      final module = modules[index];
+                      return programCard(
+                        index + 1,
+                        module['module_name'],
+                        List<String>.from(module['topics']),
+                        module['total_hours'],
+                        module['chapters'],
+                      );
+                    }),
                   ),
+                  SizedBox(height: 15),
+                  (widget.isLearning == true)
+                      ? FeedbackList(instructor: instructor)
+                      : Container(),
+                  SizedBox(height: 175),
                 ],
               ),
             ),
 
-            // Description
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                widget.courseData['description'],
-                style: const TextStyle(color: Colors.black87, fontSize: 14),
+      floatingActionButton: (widget.isLearning == false)
+          ? Container(
+              color: Colors.white,
+              height: 80,
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () async{
+                  setState(() {
+                    isLoading = true;
+                  });
+                  await Future.delayed(Duration(seconds: 5));
+                  setState(() {
+                    isLoading = false;
+                    widget.isLearning = true;
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'You registered Sucessfully...',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                },
+                child: Text(
+                  (isLoading) ? 'Processing....' : 'Start Learning',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
+            )
+          : FloatingActionButton(
+              onPressed: () {
+                // going to feedback page
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => CourseFeedbackPage()));
+              },
+              backgroundColor: AppColors.lightPurple,
+              child: Icon(Icons.feedback_outlined, color: Colors.white),
             ),
-
-            // Modules List
-            Column(
-              children: List.generate(modules.length, (index) {
-                final module = modules[index];
-                return programCard(
-                  index + 1,
-                  module['module_name'],
-                  List<String>.from(module['topics']),
-                  module['total_hours'],
-                  module['chapters'],
-                );
-              }),
-            ),
-            SizedBox(height: 175),
-          ],
-        ),
-      ),
-
-      floatingActionButton: Container(
-        color: Colors.white,
-        height: 80,
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-        width: double.infinity,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          onPressed: () {},
-          child: const Text(
-            'Start Learning',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: (widget.isLearning)
+          ? null
+          : FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -153,15 +176,37 @@ class _ProgramdetailscreenState extends State<Programdetailscreen> {
     );
   }
 
-  // Widget description(String text) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-  //     child: Text(
-  //       text,
-  //       style: TextStyle(color: Colors.grey[700], fontSize: 13),
-  //     ),
-  //   );
-  // }
+  Widget aboutAuthor(Map<String, dynamic> instructor) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      color: Colors.white,
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 25,
+            backgroundImage: AssetImage('assets/images/person/person.jpg'),
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                instructor['name'],
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                '${instructor['rating']} ★ | ${instructor['total_courses']} Courses',
+                style: const TextStyle(color: Colors.grey),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget description(String text) {
     return Column(
@@ -185,6 +230,121 @@ class _ProgramdetailscreenState extends State<Programdetailscreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget feedback() {
+    return Card(
+      child: ListTile(
+        title: Text('Allen Preetham\n rating ★ ★ ★ ★'),
+        leading: Icon(Icons.person_2_outlined),
+        subtitle: Text(
+          'Excelent Lecture by author, i understand inch by inch tq for this course',
+        ),
+      ),
+    );
+  }
+}
+
+class YoutubeVideoIframe extends StatefulWidget {
+  const YoutubeVideoIframe({super.key});
+
+  @override
+  State<YoutubeVideoIframe> createState() => _YoutubeVideoIframeState();
+}
+
+class _YoutubeVideoIframeState extends State<YoutubeVideoIframe> {
+  final _controller = YoutubePlayerController.fromVideoId(
+    videoId: 'XbQ-7zwuOdE', // only the ID
+    autoPlay: true,
+    params: const YoutubePlayerParams(
+      showFullscreenButton: true,
+      showControls: true,
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: AlignmentGeometry.center,
+      children: [
+        YoutubePlayerScaffold(
+          controller: _controller,
+          builder: (context, player) {
+            return Container(
+              height: 200,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.all(15),
+              child: player,
+            );
+          },
+        ),
+        Container(
+          height: 45,
+          width: 45,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white.withOpacity(0.3),
+          ),
+          child: Icon(Icons.play_arrow, color: Colors.white, size: 30),
+        ),
+      ],
+    );
+  }
+}
+
+class FeedbackList extends StatelessWidget {
+  const FeedbackList({super.key, required this.instructor});
+  final Map<String, dynamic> instructor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(children: [aboutAuthor(instructor), feedback()]),
+    );
+  }
+
+  Widget aboutAuthor(Map<String, dynamic> instructor) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      color: Colors.white,
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 25,
+            backgroundImage: AssetImage('assets/images/person/person.jpg'),
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                instructor['name'],
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                '${instructor['rating']} ★ | ${instructor['total_courses']} Courses',
+                style: const TextStyle(color: Colors.grey),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget feedback() {
+    return Card(
+      child: ListTile(
+        title: Text('Allen Preetham'),
+        leading: Icon(Icons.person_2_outlined),
+        subtitle: Text(
+          'Excelent Lecture by author, i understand inch by inch tq for this course',
+        ),
+      ),
     );
   }
 }
